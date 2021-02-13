@@ -1,22 +1,31 @@
+const result = document.getElementById('result')
+
 
 const playGame = function () {
     let rounds = prompt('How many games would you like to play?');
+    while (isNaN(rounds)) {
+        rounds = prompt('Please enter a valid number.');
+    }
     rounds = parseInt(rounds);
 
     let count = 1;
     let playerScore = 0, compScore = 0
 
     while (count <= rounds) {
+        const choices = ['rock', 'paper', 'scissors'];
+
         let player = prompt('Choose either rock, paper, or scissors');
 
-        const choices = ['Rock', 'Paper', 'Scissors'];
         let index = Math.floor(Math.random() * 3)
-
-        let computer = choices[index]
-        console.log(`Round: ${count} - Player: ${player}, Computer: ${computer}`)
+        let compChoice = choices[index]
 
         let playerChoice = player.toLowerCase();
-        let compChoice = computer.toLowerCase();
+
+        while (choices.every(choice => choice != playerChoice)) {
+            playerChoice = prompt('Please enter a valid choice.');
+        }
+
+        console.log(`Round: ${count} - Player: ${playerChoice}, Computer: ${compChoice}`)
 
 
         if (playerChoice === compChoice) {
@@ -57,5 +66,6 @@ const playGame = function () {
 
         count++
     }
-    console.log(`Round ${count}, Score: Player ${playerScore}, Computer ${compScore}`)
+    result.innerHTML = `Game Over! Score: Player ${playerScore}, Computer ${compScore}`;
+    return `Game Over! Score: Player ${playerScore}, Computer ${compScore}`
 }
